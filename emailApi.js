@@ -115,9 +115,7 @@ function getNewToken(oAuth2Client, callback) {
 /**
  * read a mail from Inbox
  */
-function getMail(auth, messageId) {
-    const gmail = google.gmail({ version: 'v1', auth });
-
+function getMail(gmail, messageId) {
     return msg = new Promise((resolve, reject) => {
         gmail.users.messages.get(
             {
@@ -166,7 +164,7 @@ function getRecentMail(auth) {
                     const messages = res.data.messages;
                     if (messages.length) {
                         //console.log("First mail ID : ", messages[0].id);
-                        const mail = getMail(auth, messages[0].id);
+                        const mail = getMail(gmail, messages[0].id);
                         mail.then(data => {
                             console.log("Promise: Get Recent Mail...");
                             resolve(mail);
