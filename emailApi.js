@@ -15,19 +15,18 @@ const SCOPES = ['https://www.googleapis.com/auth/gmail.readonly'];
 const TOKEN_PATH = 'token.json';
 
 
-
 const showRecentEmail = () => {
     return new Promise((resolve, reject) => {
         fs.readFile('credentials.json', (err, data) => {
             if (err) reject(err);
             else {
-                console.log("Promise: Get user credentilas...")
+                console.log("Promise: Credentials found...")
                 resolve(
                     new Promise((resolve, reject) => {
                         authorize(JSON.parse(data), (auth) => {
                             if (!auth) reject(auth);
                             else {
-                                console.log("Promise: User authentication successfull...")
+                                console.log("Promise: Authentication successfull...")
                                 getRecentMail(auth).then(data => {
                                     resolve(data);
                                 });
@@ -137,7 +136,7 @@ function getMail(auth, messageId) {
                         simplePaeser(htmlBody, "skipHtmlToText", (err, parsedData) => {
                             if (err) reject(err);
                             else {
-                                console.log("Promise: Recent Mail Parsed...");
+                                console.log("Promise: Parsed recent mail successfully...");
                                 resolve(parsedData.textAsHtml)
                             };
                         })
